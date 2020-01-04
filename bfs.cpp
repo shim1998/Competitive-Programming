@@ -51,7 +51,7 @@ void bfs(int s){
             if(!vis[u]){
                 vis[u]=1;
                 q.push(u);
-                dis[u]=dis[v]+6;
+                dis[u]=dis[v]+1;
             }
         }
     }
