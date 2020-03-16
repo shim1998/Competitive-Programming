@@ -216,6 +216,16 @@ void solve(){
                     return;
                 }
             }
+            repr(i,0,13){
+                // cout<<v1[i]<<' '<<v2[i]<<'\n';
+                if(v1[i]>v2[i]){
+                    ans++;
+                    return;
+                }
+                else if(v2[i]>v1[i]){
+                    return;
+                }
+            }
         }
         else if(a==3){
             repr(i,0,13){
@@ -236,14 +246,34 @@ void solve(){
                     return;
                 }
             }
+            repr(i,0,13){
+                // cout<<v1[i]<<' '<<v2[i]<<'\n';
+                if(v1[i]>v2[i]){
+                    ans++;
+                    return;
+                }
+                else if(v2[i]>v1[i]){
+                    return;
+                }
+            }
         }
         else if(a==6){
-            rep(i,0,13){
+            repr(i,0,13){
                 if(v1[i]>v2[i] and v1[i]>=4){
                     ans++;
                     return;
                 }
                 else if(v2[i]>v1[i] and v2[i]>=4){
+                    return;
+                }
+            }
+            repr(i,0,13){
+                // cout<<v1[i]<<' '<<v2[i]<<'\n';
+                if(v1[i]>v2[i]){
+                    ans++;
+                    return;
+                }
+                else if(v2[i]>v1[i]){
                     return;
                 }
             }
@@ -273,6 +303,6 @@ int main(){
     cin>>t;
     while(t--)
         solve();
-    cout<<ans-1;
+    cout<<ans;
     return 0;
 }
