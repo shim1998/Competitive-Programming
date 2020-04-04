@@ -32,8 +32,7 @@ typedef unordered_map<ll,ll> umll;
 const int INF = 1e9+5;
 const int MOD = 1e9+7;
 
-int solve(){
-    return 0;
+void solve(){
 }
     
 int main(){ 
@@ -44,8 +43,8 @@ int main(){
     fastio;
     int t=1;
     cin>>t;
-    int i=1;
+    int _=1;
     while(t--)
-        cout<<"Case #"<<i<<": "<<solve()<<'\n',i++;
+        cout<<"Case #"<<_<<": ",solve(),_++;
     return 0;
 }
