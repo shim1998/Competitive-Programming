@@ -34,7 +34,7 @@ const int MOD = 1e9+7;
 
 void solve(){
 }
-    
+
 int main(){ 
     // #ifndef ONLINE_JUDGE  
         // freopen("input.txt", "r", stdin); 
