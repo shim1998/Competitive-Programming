@@ -45,6 +45,6 @@ int main(){
     cin>>t;
     int _=1;
     while(t--)
-        cout<<"Case #"<<_<<": ",solve(),_++;
+        cout<<"Case #"<<_<<": ",solve(),cout<<'\n',_++;
     return 0;
 }
