@@ -3,6 +3,7 @@
 using namespace std;
 #define DEBUG(x) cout << '>' << #x << ':' << x << endl;
 #define ll long long int
+#define endl '\n'
 typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<vll> vvl;
@@ -16,6 +17,7 @@ typedef map<int,int> mii;
 typedef map<ll,ll> mll;
 typedef set<int> sii;
 typedef set<ll> sll;
+typedef queue<int> qii;
 typedef priority_queue<int> pq;
 typedef unordered_map<int,int> umii;
 typedef unordered_map<ll,ll> umll;
