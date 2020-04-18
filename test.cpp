@@ -1,5 +1,6 @@
 /*Made by Shivam Solanki*/
 #include<bits/stdc++.h>
+#pragma GCC optimize ("Ofast")
 using namespace std;
 #define DEBUG(x) cout << '>' << #x << ':' << x << endl;
 #define ll long long int
