@@ -37,7 +37,9 @@ const int MOD = 1e9+7;
 const ll INF1 = 2e18+2;
 vp a[200005];
 vll d;
- 
+
+//Solution for CSES 1671
+
 void dijkstra(int s,int n){
     d[s]=0;
     priority_queue<pii, vector<pii>, greater<pii>> q;
