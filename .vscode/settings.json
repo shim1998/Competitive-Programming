@@ -9,5 +9,6 @@
         "unordered_set": "cpp",
         "vector": "cpp",
         "random": "cpp"
-    }
+    },
+    "python.pythonPath": "C:\\Users\\98shi\\AppData\\Local\\Programs\\Python\\Python35\\python.exe"
 }

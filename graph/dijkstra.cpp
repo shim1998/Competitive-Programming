@@ -34,20 +34,53 @@ typedef unordered_map<ll,ll> umll;
 #define fastio ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 const int INF = 1e9+5;
 const int MOD = 1e9+7;
-
-void solve(){
+const ll INF1 = 2e18+2;
+vp a[200005];
+vll d;
+ 
+void dijkstra(int s,int n){
+    d[s]=0;
+    priority_queue<pii, vector<pii>, greater<pii>> q;
+    q.push({s,0});
+    while(!q.empty()){
+        int v=q.top().F;
+        int d_v=q.top().S;
+        q.pop();
+        if(d_v!=d[v]) continue;
+        for(auto edge:a[v]){
+            int to=edge.F;
+            int len=edge.S;
+            if(d[v]+len<d[to]){
+                d[to]=d[v]+len;
+                q.push({to,d[to]});
+            }
+        }
+    }
 }
-    
+ 
+void solve(){
+    int n,m;
+    cin>>n>>m;
+    d=vll(n,INF1);
+    rep(i,0,m){
+        int u,v,w;
+        cin>>u>>v>>w;
+        u--,v--;
+        a[u].pb({v,w});
+    }
+    dijkstra(0,n);
+    rep(i,0,n) cout<<d[i]<<' ';
+}
+ 
 int main(){ 
     // #ifndef ONLINE_JUDGE  
         // freopen("input.txt", "r", stdin); 
         // freopen("output.txt", "w", stdout); 
     // #endif 
-    fastio;
+    // fastio;
     int t=1;
-    cin>>t;
-    int _=1;
+    // cin>>t;
     while(t--)
-        cout<<"Case #"<<_<<": ",solve(),cout<<'\n',_++;
+        solve();
     return 0;
 }
