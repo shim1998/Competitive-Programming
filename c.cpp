@@ -34,57 +34,40 @@ typedef unordered_map<ll,ll> umll;
 #define fastio ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 const int INF = 1e9+5;
 const int MOD = 1e9+7;
-const int N = 1e6+5;
-
-sii primes;
-
-void sieve(){  
-    bool prime[N+1]; 
-    memset(prime,true,sizeof(prime)); 
-    for(int p=2;p*p<=N;p++){  
-        if(prime[p]==true){ 
-            for(int i=p*p;i<=N;i+=p) 
-                prime[i]=false; 
-        } 
-    } 
-    rep(p,2,N+1) 
-       if(prime[p]) 
-            primes.insert(p);
-} 
 
 void solve(){
-    sieve();
-    sii truncable;
-    ll sum=0;
-    for(int i:primes){
-        if(i!=2 and i!=3 and i!=5 and i!=7){
-            string check=to_string(i);
-            int n=check.size();
-            bool flag=1;
-            rep(j,1,n){
-                int num=stoi(check.substr(j,n));
-                // cout<<num<<'\n';
-                if(primes.count(num)==0){
-                    flag=0;
-                    break;
+    int n;
+    cin>>n;
+    vi a(n,0);
+    if(n&1){
+        //1,3,5...
+        a[n/2]=1;
+        if(n>1){
+            a[0]=2;
+            bool f=1;
+            rep(i,2,n){
+                if(f){
+                    
                 }
-            }
-            repr(j,1,n-1){
-                int num=stoi(check.substr(0,j));
-                // cout<<num<<'\n';
-                if(primes.count(num)==0){
-                    flag=0;
-                    break;
-                }
-            }
-            if(flag){
-                // cout<<i<<'\n';
-                sum+=i;
             }
         }
     }
-    cout<<sum<<'\n';
+    else{
+        //2,4,6..
+        a[n/2-1]=1;
+        if(n>=2){
+            int x=n/2-1;
+            a[x+(n-x)/2]=2;
+            bool f=0;
+            rep(i,2,n){
+
+            }
+        }
+    }
+    rep(i,0,n) cout<<a[i]<<' ';
+    cout<<'\n';
 }
+
 int main(){ 
     // #ifndef ONLINE_JUDGE  
         // freopen("input.txt", "r", stdin); 
