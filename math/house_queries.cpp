@@ -61,7 +61,7 @@ void solve(){
     };
     //till here
     for(;;){
-        int l=0,r=1001;
+        int l=0,r=1000;
         while(l<=r){
             int m=(l+r)/2;
             cout<<"? "<<m<<' '<<0<<'\n';
@@ -81,7 +81,7 @@ void solve(){
             }
         }
         int a=2*(l-1);
-        l=0,r=1001;
+        l=0,r=1000;
         while(l<=r){
             int m=(l+r)/2;
             cout<<"? "<<m<<' '<<a<<'\n';
@@ -100,7 +100,7 @@ void solve(){
             }
         }
         int b=2*(l-1);
-        l=0,r=1001;
+        l=0,r=1000;
         while(l<=r){
             int m=(l+r)/2;
             cout<<"? "<<0<<' '<<m<<'\n';
