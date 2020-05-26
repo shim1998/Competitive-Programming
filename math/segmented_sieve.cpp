@@ -41,46 +41,31 @@ sii primes;
 
 void simpleSieve(int limit,vector<int> &prime){ 
     bool mark[limit+1];
-    memset(mark, true, sizeof(mark));
-    for(int p=2;p*p<limit;p++){ 
-        if(mark[p]){ 
-            for(int i=p*2;i<limit;i+=p) mark[i]=false;
-        }
-    }
-    rep(p,2,limit){ 
-        if (mark[p]){ 
-			primes.insert(p);
-            prime.push_back(p); 
-            // cout << p << " "; 
-        } 
-    } 
+    memset(mark,1,sizeof(mark));
+    for(int p=2;p*p<limit;p++)
+        if(mark[p]) for(int i=p*2;i<limit;i+=p) mark[i]=0;
+    rep(p,2,limit)
+        if(mark[p]) primes.insert(p),prime.push_back(p); 
 } 
 
 void segmentedSieve(){ 
     int limit=(sqrt(N))+1; 
     vector<int> prime;  
-    simpleSieve(limit, prime);   
-    int low = limit; 
-    int high=2*limit; 
+    simpleSieve(limit,prime);   
+    int low=limit,high=2*limit; 
     while(low<N){ 
-        if(high>=N)  
-           high=N; 
+        if(high>=N) high=N; 
         bool mark[limit+1]; 
         memset(mark, true, sizeof(mark)); 
         rep(i,0,prime.size()){ 
             int loLim=(low/prime[i])*prime[i]; 
-            if (loLim<low) 
-                loLim+=prime[i]; 
+            if (loLim<low) loLim+=prime[i]; 
             for(int j=loLim;j<high;j+=prime[i]) 
                 mark[j-low] = false; 
         } 
-        rep(i,low,high){
-            if (mark[i - low] == true){ 
-				primes.insert(i);
-			}
-		}
-        low+=limit; 
-        high+=limit; 
+        rep(i,low,high)
+            if(mark[i-low])  primes.insert(i);
+        low+=limit,high+=limit; 
     } 
 } 
 
