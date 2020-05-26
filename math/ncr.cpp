@@ -34,55 +34,52 @@ typedef unordered_map<ll,ll> umll;
 #define fastio ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 const int INF = 1e9+5;
 const int MOD = 1e9+7;
-const ll inf = 2e18+11;
+const int MAXN = 2e5+9;
+double pi = 2 * acos(0.0); 
+
+//problem link https://www.codechef.com/LRNDSA05/problems/BINXOR
+
+int bpow(int x, int n) {
+	return n ? n % 2 ? 1LL * x * bpow(x, n - 1) % MOD : bpow(1LL * x * x % MOD, n / 2) : 1;
+}
+int inv(int x) {
+	return bpow(x, MOD - 2);
+}
  
-vp adj[2501];
-vll d(2501,inf);
- 
-bool spfa(int s,int n){
-    vector<int> cnt(n,0);
-    vector<bool> inqueue(n,false);
-    queue<int> q;
-    d[s] = 0;
-    q.push(s);
-    inqueue[s] = true;
-    while (!q.empty()) {
-        int v = q.front();
-        q.pop();
-        inqueue[v] = false;
- 
-        for (auto edge : adj[v]) {
-            int to = edge.first;
-            int len = edge.second;
- 
-            if (d[v] + len < d[to]) {
-                d[to] = d[v] + len;
-                if (!inqueue[to]) {
-                    q.push(to);
-                    inqueue[to] = true;
-                    cnt[to]++;
-                    if (cnt[to] > n)
-                        return false;  // negative cycle
-                }
-            }
+int F[MAXN];
+int fact(int n) {
+	return n ? F[n] ? F[n] : F[n] = 1LL * n * fact(n - 1) % MOD : 1;
+}
+int rfact(int n) {
+	return inv(fact(n));
+}
+int nCr(int n, int r) {
+	return 1LL * fact(n) * rfact(r) % MOD * rfact(n - r) % MOD;
+}
+
+void solve(){
+    int n;
+    cin>>n;
+    string a,b;
+    cin>>a>>b;
+    int a1=0,a2=0;
+    rep(i,0,n){
+        if(a[i]=='1'){
+            a1++;
+        }
+        if(b[i]=='1'){
+            a2++;
         }
     }
-    return true;
+	int ans = 0;
+	int L = abs(a1 - a2);
+	int R = a1 + a2 - 2 * max(0, a1 + a2 - n);
+	for(int k = L; k <= R; k += 2) {
+		ans = (ans + nCr(n,k)) % MOD;
+	}
+	cout << ans << endl;
 }
- 
-void solve(){
-    int n,m;
-    cin>>n>>m;
-    rep(i,0,m){
-        int u,v,w;
-        cin>>u>>v>>w;
-        u--,v--;
-        adj[u].pb({v,-w});
-    }
-    bool x=spfa(0,n);
-    cout<<(x?-(d[n-1]):-1);
-}
- 
+
 int main(){ 
     // #ifndef ONLINE_JUDGE  
         // freopen("input.txt", "r", stdin); 
@@ -90,7 +87,7 @@ int main(){
     // #endif 
     fastio;
     int t=1;
-    // cin>>t;
+    cin>>t;
     while(t--)
         solve();
     return 0;

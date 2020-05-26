@@ -34,6 +34,7 @@ typedef unordered_map<ll,ll> umll;
 #define fastio ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 const int INF = 1e9+5;
 const int MOD = 1e9+7;
+double pi = 2 * acos(0.0); 
 
 void solve(){
     vvi data;

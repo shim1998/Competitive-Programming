@@ -34,7 +34,8 @@ typedef unordered_map<ll,ll> umll;
 #define fastio ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 const int INF = 1e9+5;
 const int MOD = 1e9+7;
-const ll INF1 = 2e18+2;
+double pi = 2 * acos(0.0); 
+const ll inf = 2e18+2;
 vp a[200005];
 vll d;
 
@@ -63,7 +64,7 @@ void dijkstra(int s,int n){
 void solve(){
     int n,m;
     cin>>n>>m;
-    d=vll(n,INF1);
+    d=vll(n,inf);
     rep(i,0,m){
         int u,v,w;
         cin>>u>>v>>w;

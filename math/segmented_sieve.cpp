@@ -35,63 +35,82 @@ typedef unordered_map<ll,ll> umll;
 const int INF = 1e9+5;
 const int MOD = 1e9+7;
 double pi = 2 * acos(0.0); 
-const int N = 1e6+5;
+const int N = 1e7+5;
 
 sii primes;
 
-void sieve(){  
-    bool prime[N+1]; 
-    memset(prime,true,sizeof(prime)); 
-    for(int p=2;p*p<=N;p++){  
-        if(prime[p]==true){ 
-            for(int i=p*p;i<=N;i+=p) 
-                prime[i]=false; 
+void simpleSieve(int limit,vector<int> &prime){ 
+    bool mark[limit+1];
+    memset(mark, true, sizeof(mark));
+    for(int p=2;p*p<limit;p++){ 
+        if(mark[p]){ 
+            for(int i=p*2;i<limit;i+=p) mark[i]=false;
+        }
+    }
+    rep(p,2,limit){ 
+        if (mark[p]){ 
+			primes.insert(p);
+            prime.push_back(p); 
+            // cout << p << " "; 
         } 
     } 
-    rep(p,2,N+1) 
-       if(prime[p]) 
-            primes.insert(p);
+} 
+
+void segmentedSieve(){ 
+    int limit=(sqrt(N))+1; 
+    vector<int> prime;  
+    simpleSieve(limit, prime);   
+    int low = limit; 
+    int high=2*limit; 
+    while(low<N){ 
+        if(high>=N)  
+           high=N; 
+        bool mark[limit+1]; 
+        memset(mark, true, sizeof(mark)); 
+        rep(i,0,prime.size()){ 
+            int loLim=(low/prime[i])*prime[i]; 
+            if (loLim<low) 
+                loLim+=prime[i]; 
+            for(int j=loLim;j<high;j+=prime[i]) 
+                mark[j-low] = false; 
+        } 
+        rep(i,low,high){
+            if (mark[i - low] == true){ 
+				primes.insert(i);
+			}
+		}
+        low+=limit; 
+        high+=limit; 
+    } 
 } 
 
 void solve(){
-    sieve();
-    sii truncable;
-    ll sum=0;
-    for(int i:primes){
-        if(i!=2 and i!=3 and i!=5 and i!=7){
-            string check=to_string(i);
-            int n=check.size();
-            bool flag=1;
-            rep(j,1,n){
-                int num=stoi(check.substr(j,n));
-                // cout<<num<<'\n';
-                if(primes.count(num)==0){
-                    flag=0;
-                    break;
-                }
-            }
-            repr(j,1,n-1){
-                int num=stoi(check.substr(0,j));
-                // cout<<num<<'\n';
-                if(primes.count(num)==0){
-                    flag=0;
-                    break;
-                }
-            }
-            if(flag){
-                // cout<<i<<'\n';
-                sum+=i;
-            }
-        }
-    }
-    cout<<sum<<'\n';
+    //To find maximum prime subarray length
+	int n;
+	cin>>n;
+	int a[n];
+	rep(i,0,n) cin>>a[i];
+	int ctr=0,ans=0;
+	rep(i,0,n){
+		if(primes.count(a[i])){
+			ctr++;
+		}
+		else{
+			ans=max(ctr,ans);
+			ctr=0;
+		}
+	}
+	ans=max(ctr,ans);
+	cout<<(ans==0?-1:ans)<<'\n';
 }
+
 int main(){ 
     // #ifndef ONLINE_JUDGE  
         // freopen("input.txt", "r", stdin); 
         // freopen("output.txt", "w", stdout); 
     // #endif 
     fastio;
+    segmentedSieve();
     int t=1;
     cin>>t;
     while(t--)

@@ -34,6 +34,7 @@ typedef unordered_map<ll,ll> umll;
 #define fastio ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 const int INF = 1e9+5;
 const int MOD = 1e9+7;
+double pi = 2 * acos(0.0); 
 const ll inf = 2e18+11;
 
 //CSES 1672
@@ -56,9 +57,9 @@ void solve(){
     rep(i,0,n){
         d[i][i]=0;
     }
-    for (int k = 0; k < n; ++k) {
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
+    rep(k,0,n){
+        rep(i,0,n){
+            rep(j,0,n){
                 d[i][j] = min(d[i][j], d[i][k] + d[k][j]); 
             }
         }
