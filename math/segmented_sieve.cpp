@@ -86,7 +86,7 @@ void solve(){
 		}
 	}
 	ans=max(ctr,ans);
-	cout<<(ans==0?-1:ans)<<'\n';
+	cout<<(ans?ans:-1)<<'\n';
 }
 
 int main(){ 
