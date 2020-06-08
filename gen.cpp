@@ -2,7 +2,7 @@
 #include<bits/stdc++.h>
 #pragma GCC optimize ("Ofast")
 using namespace std;
-#define DEBUG(x) cerr << '>' << #x << ':' << x << endl;
+#define DEBUG(x) cout << '>' << #x << ':' << x << endl;
 #define ll long long int
 #define endl '\n'
 typedef vector<int> vi;
@@ -36,15 +36,16 @@ const int INF = 1e9+5;
 const int MOD = 1e9+7;
 double pi = 2 * acos(0.0); 
 
-void solve(){
+void solve(){ 
 }
 
-int main(){ 
+int main(int argc, char** argv){ 
     // #ifndef ONLINE_JUDGE  
         // freopen("input.txt", "r", stdin); 
         // freopen("output.txt", "w", stdout); 
     // #endif 
     fastio;
+    srand(stoi(*(argv+1)));
     int t=1;
     // cin>>t;
     while(t--)
