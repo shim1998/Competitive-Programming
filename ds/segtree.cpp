@@ -36,17 +36,26 @@ const int INF = 1e9+5;
 const int MOD = 1e9+7;
 double pi = 2 * acos(0.0); 
 
-//Codeforces EDU Step 1 practise solutions Basic Sum Over Segment Tree,RMQ, RMQ with counts
+//Codeforces EDU Step 1 and Step 2 practise solutions Basic Sum Over Segment Tree,RMQ, RMQ with counts
 
 struct dat{
-   ll s;
-   int val,cnt;
+   ll seg,pref,suf,sum;
 };
 
-dat emin(dat a,dat b){
-   if(a.val<b.val) return a;
-   if(b.val<a.val) return b;
-   return {a.s,a.val,a.cnt+b.cnt};
+dat func(dat a,dat b){
+   return {
+      max({a.seg,b.seg,a.suf+b.pref}),
+      max(a.pref,a.sum+b.pref),
+      max(b.suf,b.sum+a.suf),
+      a.sum+b.sum
+   };
+}
+
+dat NEUTRAL_ELEMENT={0,0,0,0};
+
+dat single(int v){
+   if(v>0) return {v,v,v,v};
+   else return {0,0,0,v};
 }
 
 vector<dat>segtree;
@@ -59,47 +68,31 @@ int init(int n,int size){
 
 void build(vi &a,int x,int lx,int rx){
    if(rx-lx==1){
-      if(lx<(int)a.size()) segtree[x].s=a[lx],segtree[x].val=a[lx],segtree[x].cnt=1;
+      if(lx<(int)a.size()) segtree[x]=single(a[lx]);
    }
    else{
       int m=(lx+rx)/2;
       build(a,x*2+1,lx,m);
       build(a,x*2+2,m,rx);
-      segtree[x].s=segtree[x*2+1].s+segtree[x*2+2].s;
-      segtree[x]=emin(segtree[x*2+1],segtree[x*2+2]);
+      segtree[x]=func(segtree[x*2+1],segtree[x*2+2]);
    }
 }
 
 void update(int i,int v,int x,int lx,int rx){
-   if(rx-lx==1) segtree[x].s=v,segtree[x].val=v,segtree[x].cnt=1;
+   if(rx-lx==1) segtree[x]=single((ll)v);
    else{
       int m=(lx+rx)/2;
       if(i<m) update(i,v,2*x+1,lx,m);
       else update(i,v,2*x+2,m,rx);
-      segtree[x].s=segtree[x*2+1].s+segtree[x*2+2].s;
-      segtree[x]=emin(segtree[x*2+1],segtree[x*2+2]);
+      segtree[x]=func(segtree[x*2+1],segtree[x*2+2]);
    }
 }
 
-ll sum(int l,int r,int x,int lx,int rx){
-   if(lx>=r||l>=rx) return 0;
-   if(lx>=l&&rx<=r) return segtree[x].s;
-   int m=(lx+rx)/2;
-   return sum(l,r,x*2+1,lx,m)+sum(l,r,x*2+2,m,rx);
-}
-
-int query1(int l,int r,int x,int lx,int rx){
-   if(lx>=r||l>=rx) return INF;
-   if(lx>=l&&rx<=r) return segtree[x].val;
-   int m=(lx+rx)/2;
-   return min(query1(l,r,x*2+1,lx,m),query1(l,r,x*2+2,m,rx));
-}
-
-dat query2(int l,int r,int x,int lx,int rx){
-   if(lx>=r||l>=rx) return {0,INF,1};
+dat query(int l,int r,int x,int lx,int rx){
+   if(lx>=r||l>=rx) return NEUTRAL_ELEMENT;
    if(lx>=l&&rx<=r) return segtree[x];
    int m=(lx+rx)/2;
-   return emin(query2(l,r,x*2+1,lx,m),query2(l,r,x*2+2,m,rx));
+   return func(query(l,r,x*2+1,lx,m),query(l,r,x*2+2,m,rx));
 }
 
 void solve(){
@@ -109,12 +102,14 @@ void solve(){
    vi a(n);
    rep(i,0,n) cin>>a[i];
    build(a,0,0,size);
-   int o,l,r;
-   dat ans;
+   int i,v;
+   dat ans=query(0,n,0,0,size);
+   cout<<ans.seg<<'\n';
    while(m--){
-      cin>>o>>l>>r;
-      if(o==1) update(l,r,0,0,size);
-      else ans=query2(l,r,0,0,size),cout<<ans.val<<' '<<ans.cnt<<'\n';
+      cin>>i>>v;
+      update(i,v,0,0,size);
+      ans=query(0,n,0,0,size);
+      cout<<ans.seg<<'\n';
    }
 }
 
