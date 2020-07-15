@@ -39,23 +39,19 @@ double pi = 2 * acos(0.0);
 //Codeforces EDU Step 1 and Step 2 practise solutions Basic Sum Over Segment Tree,RMQ, RMQ with counts
 
 struct dat{
-   ll seg,pref,suf,sum;
+   int data;
 };
 
 dat func(dat a,dat b){
-   return {
-      max({a.seg,b.seg,a.suf+b.pref}),
-      max(a.pref,a.sum+b.pref),
-      max(b.suf,b.sum+a.suf),
-      a.sum+b.sum
-   };
+   return {max(a.data,b.data)};
 }
 
-dat NEUTRAL_ELEMENT={0,0,0,0};
+dat NEUTRAL_ELEMENT={-INF};
 
 dat single(int v){
-   if(v>0) return {v,v,v,v};
-   else return {0,0,0,v};
+   return {v};
+   //if(v>0) return {v};
+   //return {v};
 }
 
 vector<dat>segtree;
@@ -79,7 +75,7 @@ void build(vi &a,int x,int lx,int rx){
 }
 
 void update(int i,int v,int x,int lx,int rx){
-   if(rx-lx==1) segtree[x]=single((ll)v);
+   if(rx-lx==1) segtree[x]=single(v);
    else{
       int m=(lx+rx)/2;
       if(i<m) update(i,v,2*x+1,lx,m);
@@ -95,6 +91,26 @@ dat query(int l,int r,int x,int lx,int rx){
    return func(query(l,r,x*2+1,lx,m),query(l,r,x*2+2,m,rx));
 }
 
+dat find(int k,int x,int lx,int rx){
+   if(rx-lx==1) return {lx};
+   int m=(lx+rx)/2;
+   dat sl=segtree[2*x+1];
+   if(k<sl.data) return find(k,2*x+1,lx,m);
+   else return find(k-sl.data,2*x+2,m,rx);
+}
+
+dat first_above(int v,int l,int x,int lx,int rx){
+   if(segtree[x].data<v) return {-1};
+   if(rx<=l) return {-1};
+   if(rx-lx==1) return {lx};
+   int m=(lx+rx)/2;
+   dat res=first_above(v,l,2*x+1,lx,m);
+   if(res.data==-1){
+      res=first_above(v,l,x*2+2,m,rx);
+   }
+   return res;
+}
+
 void solve(){
    int n,m;
    cin>>n>>m;
@@ -103,13 +119,19 @@ void solve(){
    rep(i,0,n) cin>>a[i];
    build(a,0,0,size);
    int i,v;
-   dat ans=query(0,n,0,0,size);
-   cout<<ans.seg<<'\n';
    while(m--){
-      cin>>i>>v;
-      update(i,v,0,0,size);
-      ans=query(0,n,0,0,size);
-      cout<<ans.seg<<'\n';
+      int op;
+      cin>>op;
+      if(op==1){
+         int i,v;
+         cin>>i>>v;
+         update(i,v,0,0,size);
+      }
+      else{
+         int k,l;
+         cin>>k>>l;
+         cout<<first_above(k,l,0,0,size).data<<'\n';
+      }
    }
 }
 
