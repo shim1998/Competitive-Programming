@@ -37,6 +37,7 @@ const int MOD = 1e9+7;
 double pi = 2 * acos(0.0); 
 
 void solve(){
+    cout<<"Hi";
 }
     
 int main(){ 
