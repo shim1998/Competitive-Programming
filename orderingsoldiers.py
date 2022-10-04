@@ -14,3 +14,5 @@ for i in range(t):
     for i in range(len(ans)):
         print(ans[i],'',end='')
     print('')
+    
+    print("this code works now")
